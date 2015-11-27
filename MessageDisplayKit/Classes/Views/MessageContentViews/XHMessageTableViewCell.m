@@ -223,7 +223,7 @@ static const CGFloat kXHUserNameLabelHeight = 20;
 }
 
 - (void)configUserNameWithMessage:(id <XHMessageModel>)message {
-    self.userNameLabel.text = [message sender];
+    self.userNameLabel.text = [message nickName];
 }
 
 - (void)configureMessageBubbleViewWithMessage:(id <XHMessageModel>)message {
@@ -242,18 +242,22 @@ static const CGFloat kXHUserNameLabelHeight = 20;
             [self.messageBubbleView.bubblePhotoImageView addGestureRecognizer:tapGestureRecognizer];
             break;
         }
-        case XHBubbleMessageMediaTypeText:
+       
         case XHBubbleMessageMediaTypeVoice:
         case XHBubbleMessageMediaTypeEmotion: {
-            UITapGestureRecognizer *tapGestureRecognizer;
-            if (currentMediaType == XHBubbleMessageMediaTypeText) {
-                tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureRecognizerHandle:)];
-            } else {
-                tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
-            }
-            tapGestureRecognizer.numberOfTapsRequired = (currentMediaType == XHBubbleMessageMediaTypeText ? 2 : 1);
-            [self.messageBubbleView.bubbleImageView addGestureRecognizer:tapGestureRecognizer];
+        
+            UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
+            singleTapGestureRecognizer.numberOfTapsRequired = 1;
+            [self.messageBubbleView.bubbleImageView addGestureRecognizer:singleTapGestureRecognizer];
             break;
+        }
+        case XHBubbleMessageMediaTypeText:{
+            UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureRecognizerHandle:)];
+            doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+            UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sigleTapGestureRecognizerHandle:)];
+            singleTapGestureRecognizer.numberOfTapsRequired = 1;
+            [self.messageBubbleView.bubbleImageView addGestureRecognizer:doubleTapGestureRecognizer];
+            [self.messageBubbleView.displayTextView addGestureRecognizer:singleTapGestureRecognizer];            break;
         }
         default:
             break;
@@ -464,7 +468,7 @@ static const CGFloat kXHUserNameLabelHeight = 20;
             userNameLabel.textAlignment = NSTextAlignmentCenter;
             userNameLabel.backgroundColor = [UIColor clearColor];
             userNameLabel.font = [UIFont systemFontOfSize:12];
-            userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
+            userNameLabel.textColor = [UIColor grayColor];//[UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
             [self.contentView addSubview:userNameLabel];
             self.userNameLabel = userNameLabel;
         }

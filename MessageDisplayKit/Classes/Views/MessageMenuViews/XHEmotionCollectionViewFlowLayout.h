@@ -11,4 +11,19 @@
 
 @interface XHEmotionCollectionViewFlowLayout : UICollectionViewFlowLayout
 
+@property (nonatomic, strong) NSMutableArray *emotions;
+
+
+/**
+ *  是否是emotion
+ */
+@property int emojiViewSize;
+@property int emojiMinimumLineSpacing;
+
+
+/**
+ *  调整布局
+ */
+- (void)resize;
+
 @end

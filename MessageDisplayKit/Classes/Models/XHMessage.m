@@ -12,12 +12,14 @@
 
 - (instancetype)initWithText:(NSString *)text
                       sender:(NSString *)sender
+                       nickName:(NSString *)nickName
                         timestamp:(NSDate *)timestamp {
     self = [super init];
     if (self) {
         self.text = text;
         
         self.sender = sender;
+        self.nickName = nickName;
         self.timestamp = timestamp;
         
         self.messageMediaType = XHBubbleMessageMediaTypeText;
@@ -40,6 +42,7 @@
                  thumbnailUrl:(NSString *)thumbnailUrl
                originPhotoUrl:(NSString *)originPhotoUrl
                        sender:(NSString *)sender
+                        nickName:(NSString *)nickName
                          timestamp:(NSDate *)timestamp {
     self = [super init];
     if (self) {
@@ -48,6 +51,7 @@
         self.originPhotoUrl = originPhotoUrl;
         
         self.sender = sender;
+        self.nickName = nickName;
         self.timestamp = timestamp;
         
         self.messageMediaType = XHBubbleMessageMediaTypePhoto;
@@ -70,6 +74,7 @@
                                videoPath:(NSString *)videoPath
                                 videoUrl:(NSString *)videoUrl
                                   sender:(NSString *)sender
+                                     nickName:(NSString *)nickName
                                     timestamp:(NSDate *)timestamp {
     self = [super init];
     if (self) {
@@ -78,6 +83,7 @@
         self.videoUrl = videoUrl;
         
         self.sender = sender;
+        self.nickName = nickName;
         self.timestamp = timestamp;
         
         self.messageMediaType = XHBubbleMessageMediaTypeVideo;
@@ -100,9 +106,10 @@
                          voiceUrl:(NSString *)voiceUrl
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
+                        nickName:(NSString *)nickName
                         timestamp:(NSDate *)timestamp {
     
-    return [self initWithVoicePath:voicePath voiceUrl:voiceUrl voiceDuration:voiceDuration sender:sender timestamp:timestamp isRead:YES];
+    return [self initWithVoicePath:voicePath voiceUrl:voiceUrl voiceDuration:voiceDuration sender:sender nickName:nickName timestamp:timestamp isRead:YES];
 }
 
 /**
@@ -121,6 +128,7 @@
                          voiceUrl:(NSString *)voiceUrl
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
+                            nickName:(NSString *)nickName
                         timestamp:(NSDate *)timestamp
                            isRead:(BOOL)isRead {
     self = [super init];
@@ -130,6 +138,7 @@
         self.voiceDuration = voiceDuration;
         
         self.sender = sender;
+         self.nickName = nickName;
         self.timestamp = timestamp;
         self.isRead = isRead;
         
@@ -157,6 +166,7 @@
                               geolocations:(NSString *)geolocations
                                   location:(CLLocation *)location
                                     sender:(NSString *)sender
+                                    nickName:(NSString *)nickName
                                  timestamp:(NSDate *)timestamp {
     self = [super init];
     if (self) {
@@ -165,6 +175,7 @@
         self.location = location;
         
         self.sender = sender;
+        self.nickName = nickName;
         self.timestamp = timestamp;
         
         self.messageMediaType = XHBubbleMessageMediaTypeLocalPosition;
@@ -197,7 +208,7 @@
     _avatarUrl = nil;
     
     _sender = nil;
-    
+    _nickName = nil;
     _timestamp = nil;
 }
 
@@ -230,6 +241,7 @@
         _avatarUrl = [aDecoder decodeObjectForKey:@"avatarUrl"];
         
         _sender = [aDecoder decodeObjectForKey:@"sender"];
+        _nickName= [aDecoder decodeObjectForKey:@"nickName"];
         _timestamp = [aDecoder decodeObjectForKey:@"timestamp"];
       
         _messageMediaType = [[aDecoder decodeObjectForKey:@"messageMediaType"] integerValue];
@@ -265,6 +277,7 @@
     
     
     [aCoder encodeObject:self.sender forKey:@"sender"];
+    [aCoder encodeObject:self.nickName forKey:@"nickName"];
     [aCoder encodeObject:self.timestamp forKey:@"timestamp"];
   
     [aCoder encodeObject:[NSNumber numberWithInteger:self.messageMediaType] forKey:@"messageMediaType"];
@@ -279,34 +292,40 @@
         case XHBubbleMessageMediaTypeText:
             return [[[self class] allocWithZone:zone] initWithText:[self.text copy]
                                                             sender:[self.sender copy]
+                                                            nickName:[self.nickName copy]
                                                               timestamp:[self.timestamp copy]];
         case XHBubbleMessageMediaTypePhoto:
             return [[[self class] allocWithZone:zone] initWithPhoto:[self.photo copy]
                                                        thumbnailUrl:[self.thumbnailUrl copy]
                                                      originPhotoUrl:[self.originPhotoUrl copy]
                                                              sender:[self.sender copy]
+                                                                nickName:[self.nickName copy]
                                                                timestamp:[self.timestamp copy]];
         case XHBubbleMessageMediaTypeVideo:
             return [[[self class] allocWithZone:zone] initWithVideoConverPhoto:[self.videoConverPhoto copy]
                                                                      videoPath:[self.videoPath copy]
                                                                       videoUrl:[self.videoUrl copy]
                                                                         sender:[self.sender copy]
+                                                                        nickName:[self.nickName copy]
                                                                           timestamp:[self.timestamp copy]];
         case XHBubbleMessageMediaTypeVoice:
             return [[[self class] allocWithZone:zone] initWithVoicePath:[self.voicePath copy]
                                                                voiceUrl:[self.voiceUrl copy]
                                                           voiceDuration:[self.voiceDuration copy]
                                                                  sender:[self.sender copy]
+                                                                nickName:[self.nickName copy]
                                                               timestamp:[self.timestamp copy]];
         case XHBubbleMessageMediaTypeEmotion:
             return [[[self class] allocWithZone:zone] initWithEmotionPath:[self.emotionPath copy]
                                                                 sender:[self.sender copy]
+                                                                nickName:[self.nickName copy]
                                                                   timestamp:[self.timestamp copy]];
         case XHBubbleMessageMediaTypeLocalPosition:
             return [[[self class] allocWithZone:zone] initWithLocalPositionPhoto:[self.localPositionPhoto copy]
                                                                     geolocations:self.geolocations
                                                                         location:[self.location copy]
                                                                           sender:[self.sender copy]
+                                                                            nickName:[self.nickName copy]
                                                                             timestamp:[self.timestamp copy]];
         default:
             return nil;

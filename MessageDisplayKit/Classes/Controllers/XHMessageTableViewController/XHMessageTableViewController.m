@@ -1121,6 +1121,7 @@ static CGPoint  delayOffset = {0.0};
         case 2: {
             WEAKSELF
             [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
+
                 CLPlacemark *placemark = [placemarks lastObject];
                 if (placemark) {
                     NSDictionary *addressDictionary = placemark.addressDictionary;
@@ -1144,7 +1145,13 @@ static CGPoint  delayOffset = {0.0};
 #pragma mark - XHEmotionManagerView Delegate
 
 - (void)didSelecteEmotion:(XHEmotion *)emotion atIndexPath:(NSIndexPath *)indexPath {
-    [self didSendEmotionMessageWithEmotionPath:emotion.emotionPath];
+    if (emotion.emojiCode !=  nil) {
+        self.messageInputView.inputTextView.text = [self.messageInputView.inputTextView.text stringByAppendingString:emotion.emojiCode];
+        //[self didSendTextAction:emotion.emojiCode];
+    }else{
+        [self didSendEmotionMessageWithEmotionPath:emotion.emotionPath];
+    }
+    
 }
 
 #pragma mark - XHEmotionManagerView DataSource

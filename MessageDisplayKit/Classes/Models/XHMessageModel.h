@@ -48,6 +48,8 @@
 
 - (NSString *)sender;
 
+- (NSString *)nickName;
+
 - (NSDate *)timestamp;
 
 - (BOOL)isRead;

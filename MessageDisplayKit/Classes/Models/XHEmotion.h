@@ -11,6 +11,9 @@
 #define kXHEmotionImageViewSize 60
 #define kXHEmotionMinimumLineSpacing 12
 
+#define kXHEmojiViewSize 40
+#define kXHEmojiMinimumLineSpacing 5
+
 @interface XHEmotion : NSObject
 
 /**
@@ -22,5 +25,12 @@
  *  gif表情的路径
  */
 @property (nonatomic, copy) NSString *emotionPath;
+
+/**
+ *   emotion编码
+ */
+@property (nonatomic, copy) NSString *emojiCode;
+
+
 
 @end

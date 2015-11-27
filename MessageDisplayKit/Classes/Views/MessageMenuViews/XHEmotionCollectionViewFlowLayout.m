@@ -25,4 +25,16 @@
     return self;
 }
 
+- (void)resize {
+    self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    self.itemSize = CGSizeMake(self.emojiViewSize, self.emojiViewSize);
+    int count = MDK_SCREEN_WIDTH/(self.emojiViewSize+self.emojiMinimumLineSpacing);
+    CGFloat spacing = MDK_SCREEN_WIDTH/count - self.emojiViewSize;
+    self.minimumLineSpacing = spacing;
+    self.sectionInset = UIEdgeInsetsMake(10, spacing/2, 0, spacing/2);
+    self.collectionView.alwaysBounceVertical = YES;
+
+}
+
+
 @end

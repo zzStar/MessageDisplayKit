@@ -15,6 +15,8 @@
  */
 @property (nonatomic, weak) UIImageView *emotionImageView;
 
+
+
 /**
  *  配置默认控件和参数
  */
@@ -40,6 +42,7 @@
         emotionImageView.backgroundColor = [UIColor colorWithRed:0.000 green:0.251 blue:0.502 alpha:1.000];
         [self.contentView addSubview:emotionImageView];
         self.emotionImageView = emotionImageView;
+       
     }
 }
 

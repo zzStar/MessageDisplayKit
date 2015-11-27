@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "XHEmotionManager.h"
 #import "XHMacro.h"
+#import "XHMessageInputView.h"
 
 #define kXHEmotionPerRowItemCount (kIsiPad ? 10 : 4)
-#define kXHEmotionPageControlHeight 38
-#define kXHEmotionSectionBarHeight 36
+#define kXHEmojiPerRowItemCount (kIsiPad ? 20 : 7)
+#define kXHEmotionPageControlHeight 10
+#define kXHEmotionSectionBarHeight 38
 
 @protocol XHEmotionManagerViewDelegate <NSObject>
 
@@ -70,6 +72,12 @@
  *  根据数据源刷新UI布局和数据
  */
 - (void)reloadData;
+
+/**
+ *   文本输入对象
+ */
+@property (nonatomic, weak) XHMessageInputView *messageInputView;
+
 
 
 @end

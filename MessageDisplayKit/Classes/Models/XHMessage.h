@@ -37,6 +37,8 @@
 
 @property (nonatomic, copy) NSString *sender;
 
+@property (nonatomic, copy) NSString *nickName;
+
 @property (nonatomic, strong) NSDate *timestamp;
 
 @property (nonatomic, assign) BOOL shouldShowUserName;
@@ -61,6 +63,7 @@
  */
 - (instancetype)initWithText:(NSString *)text
                       sender:(NSString *)sender
+                      nickName:(NSString *)nickName
                         timestamp:(NSDate *)timestamp;
 
 /**
@@ -78,6 +81,7 @@
                  thumbnailUrl:(NSString *)thumbnailUrl
                originPhotoUrl:(NSString *)originPhotoUrl
                        sender:(NSString *)sender
+                        nickName:(NSString *)nickName
                          timestamp:(NSDate *)timestamp;
 
 /**
@@ -95,6 +99,7 @@
                                videoPath:(NSString *)videoPath
                                 videoUrl:(NSString *)videoUrl
                                   sender:(NSString *)sender
+                                nickName:(NSString *)nickName
                                     timestamp:(NSDate *)timestamp;
 
 /**
@@ -112,6 +117,7 @@
                          voiceUrl:(NSString *)voiceUrl
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
+                        nickName:(NSString *)nickName
                         timestamp:(NSDate *)timestamp;
 
 /**
@@ -130,6 +136,7 @@
                          voiceUrl:(NSString *)voiceUrl
                     voiceDuration:(NSString *)voiceDuration
                            sender:(NSString *)sender
+                        nickName:(NSString *)nickName
                         timestamp:(NSDate *)timestamp
                            isRead:(BOOL)isRead;
 
@@ -144,6 +151,7 @@
  */
 - (instancetype)initWithEmotionPath:(NSString *)emotionPath
                            sender:(NSString *)sender
+                            nickName:(NSString *)nickName
                              timestamp:(NSDate *)timestamp;
 
 /**
@@ -161,6 +169,7 @@
                               geolocations:(NSString *)geolocations
                                   location:(CLLocation *)location
                           sender:(NSString *)sender
+                            nickName:(NSString *)nickName
                             timestamp:(NSDate *)timestamp;
 
 @end

@@ -11,6 +11,7 @@
 #import "XHEmotionSectionBar.h"
 
 #import "XHEmotionCollectionViewCell.h"
+#import "XHEmojiCollectionViewCell.h"
 #import "XHEmotionCollectionViewFlowLayout.h"
 
 
@@ -57,7 +58,25 @@
     
     XHEmotionManager *emotionManager = [self.dataSource emotionManagerForColumn:self.selectedIndex];
     NSInteger numberOfEmotions = emotionManager.emotions.count;
-    self.emotionPageControl.numberOfPages = (numberOfEmotions / (kXHEmotionPerRowItemCount * 2) + (numberOfEmotions % (kXHEmotionPerRowItemCount * 2) ? 1 : 0));
+    if (emotionManager.isEmoji) {
+         self.emotionPageControl.numberOfPages = (numberOfEmotions / (kXHEmojiPerRowItemCount * 3) + (numberOfEmotions % (kXHEmojiPerRowItemCount * 3) ? 1 : 0));
+    }else{
+        
+         self.emotionPageControl.numberOfPages = (numberOfEmotions / (kXHEmotionPerRowItemCount * 2) + (numberOfEmotions % (kXHEmotionPerRowItemCount * 2) ? 1 : 0));
+    }
+   
+    
+    XHEmotionCollectionViewFlowLayout *emoLayout = [[XHEmotionCollectionViewFlowLayout alloc] init];
+    if (emotionManager.isEmoji) {
+        emoLayout.emojiViewSize = kXHEmojiViewSize;
+        emoLayout.emojiMinimumLineSpacing = kXHEmojiMinimumLineSpacing;
+       
+    }else{
+        emoLayout.emojiViewSize = kXHEmotionImageViewSize;
+        emoLayout.emojiMinimumLineSpacing = kXHEmotionMinimumLineSpacing;
+    }
+    [emoLayout resize];
+     self.emotionCollectionView.collectionViewLayout = emoLayout;
     
     
     [self.emotionCollectionView reloadData];
@@ -68,13 +87,15 @@
 - (void)setup {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.backgroundColor = [UIColor colorWithWhite:0.961 alpha:1.000];
-    self.isShowEmotionStoreButton = YES;
+    self.isShowEmotionStoreButton = TRUE;
     
     
     if (!_emotionCollectionView) {
         UICollectionView *emotionCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - kXHEmotionPageControlHeight - kXHEmotionSectionBarHeight) collectionViewLayout:[[XHEmotionCollectionViewFlowLayout alloc] init]];
         emotionCollectionView.backgroundColor = self.backgroundColor;
+        
         [emotionCollectionView registerClass:[XHEmotionCollectionViewCell class] forCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier];
+        [emotionCollectionView registerClass:[XHEmojiCollectionViewCell class] forCellWithReuseIdentifier:kXHEmojiCollectionViewCellIdentifier];
         emotionCollectionView.showsHorizontalScrollIndicator = NO;
         emotionCollectionView.showsVerticalScrollIndicator = NO;
         [emotionCollectionView setScrollsToTop:NO];
@@ -136,9 +157,16 @@
 #pragma mark - XHEmotionSectionBar Delegate
 
 - (void)didSelecteEmotionManager:(XHEmotionManager *)emotionManager atSection:(NSInteger)section {
-    self.selectedIndex = section;
-    self.emotionPageControl.currentPage = 0;
-    [self reloadData];
+    
+    // 发送emotion
+    if ([self.messageInputView.delegate respondsToSelector:@selector(didSendTextAction:)]) {
+        [self.messageInputView.delegate didSendTextAction:self.messageInputView.inputTextView.text];
+    }
+    
+
+//    self.selectedIndex = section;
+//    self.emotionPageControl.currentPage = 0;
+//    [self reloadData];
 }
 
 #pragma mark - UIScrollView delegate
@@ -164,12 +192,23 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    XHEmotionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier forIndexPath:indexPath];
     
     XHEmotionManager *emotionManager = [self.dataSource emotionManagerForColumn:self.selectedIndex];
-    cell.emotion = emotionManager.emotions[indexPath.row];
+    if (emotionManager.isEmoji) {
+        XHEmojiCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kXHEmojiCollectionViewCellIdentifier forIndexPath:indexPath];
+        cell.emotion = emotionManager.emotions[indexPath.row];
+        
+        return cell;
+    }else{
+        XHEmotionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kXHEmotionCollectionViewCellIdentifier forIndexPath:indexPath];
+        cell.emotion = emotionManager.emotions[indexPath.row];
+        
+        return cell;
+    }
+        
+   
     
-    return cell;
+  
 }
 
 #pragma mark - UICollectionView delegate

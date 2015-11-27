@@ -97,6 +97,16 @@
 @implementation XHShareMenuView
 
 - (void)shareMenuItemButtonClicked:(UIButton *)sender {
+    [UIView animateWithDuration:0.3 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+        sender.transform = CGAffineTransformMakeScale(2, 2);
+        //btn.transform = CGAffineTransformMakeScale(2, 2)
+        
+    } completion:^(BOOL finished) {
+        sender.transform = CGAffineTransformMakeScale(1, 1);
+    }];
+    
+    sender.backgroundColor = [UIColor redColor];
+    sender.backgroundColor = self.backgroundColor;
     if ([self.delegate respondsToSelector:@selector(didSelecteShareMenuItem:atIndex:)]) {
         NSInteger index = sender.tag;
         if (index < self.shareMenuItems.count) {

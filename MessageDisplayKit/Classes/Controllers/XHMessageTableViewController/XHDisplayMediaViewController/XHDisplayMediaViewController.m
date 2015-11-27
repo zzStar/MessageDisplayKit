@@ -26,7 +26,7 @@
     if (!_moviePlayerController) {
         _moviePlayerController = [[MPMoviePlayerController alloc] init];
         _moviePlayerController.repeatMode = MPMovieRepeatModeOne;
-        _moviePlayerController.scalingMode = MPMovieScalingModeAspectFill;
+        _moviePlayerController.scalingMode = MPMovieScalingModeAspectFit;
         _moviePlayerController.view.frame = self.view.frame;
         [self.view addSubview:_moviePlayerController.view];
     }
@@ -36,7 +36,7 @@
 - (UIImageView *)photoImageView {
     if (!_photoImageView) {
         UIImageView *photoImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-        photoImageView.contentMode = UIViewContentModeScaleAspectFill;
+        photoImageView.contentMode = UIViewContentModeScaleAspectFit;
         photoImageView.clipsToBounds = YES;
         [self.view addSubview:photoImageView];
         _photoImageView = photoImageView;

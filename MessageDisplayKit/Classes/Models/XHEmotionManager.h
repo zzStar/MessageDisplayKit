@@ -17,4 +17,10 @@
  */
 @property (nonatomic, strong) NSMutableArray *emotions;
 
+
+/**
+ *  是否是emotion
+ */
+@property BOOL isEmoji;
+
 @end

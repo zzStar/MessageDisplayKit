@@ -8,7 +8,7 @@
 
 #import "XHEmotionSectionBar.h"
 
-#define kXHStoreManagerItemWidth 40
+#define kXHStoreManagerItemWidth 60
 
 @interface XHEmotionSectionBar ()
 
@@ -78,6 +78,7 @@
         sectionBarScrollView.showsVerticalScrollIndicator = NO;
         sectionBarScrollView.showsHorizontalScrollIndicator = NO;
         sectionBarScrollView.pagingEnabled = NO;
+        sectionBarScrollView.backgroundColor = [UIColor whiteColor];
         [self addSubview:sectionBarScrollView];
         _sectionBarScrollView = sectionBarScrollView;
     }
@@ -89,8 +90,10 @@
         storeManagerItemButtonFrame.origin.x = CGRectGetWidth(self.bounds) - kXHStoreManagerItemWidth;
         storeManagerItemButton.frame = storeManagerItemButtonFrame;
         
-        [storeManagerItemButton setTitle:@"商店" forState:UIControlStateNormal];
-        [storeManagerItemButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [storeManagerItemButton setTitle:@"发送" forState:UIControlStateNormal];
+        [storeManagerItemButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        //[storeManagerItemButton setBackgroundColor:[UIColor redColor]];
+        [storeManagerItemButton setBackgroundColor:[UIColor colorWithRed:0 green:0.4 blue:0.8 alpha:1]];
         [self addSubview:storeManagerItemButton];
         _storeManagerItemButton = storeManagerItemButton;
     }
