@@ -1118,22 +1118,22 @@ static CGPoint  delayOffset = {0.0};
             [self.photographyHelper showOnPickerViewControllerSourceType:UIImagePickerControllerSourceTypeCamera onViewController:self compled:PickerMediaBlock];
             break;
         }
-        case 2: {
-            WEAKSELF
-            [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
-
-                CLPlacemark *placemark = [placemarks lastObject];
-                if (placemark) {
-                    NSDictionary *addressDictionary = placemark.addressDictionary;
-                    NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
-                    NSString *geoLocations = [formattedAddressLines lastObject];
-                    if (geoLocations) {
-                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
-                    }
-                }
-            }];
-            break;
-        }
+//        case 2: {
+//            WEAKSELF
+//            [self.locationHelper getCurrentGeolocationsCompled:^(NSArray *placemarks) {
+//
+//                CLPlacemark *placemark = [placemarks lastObject];
+//                if (placemark) {
+//                    NSDictionary *addressDictionary = placemark.addressDictionary;
+//                    NSArray *formattedAddressLines = [addressDictionary valueForKey:@"FormattedAddressLines"];
+//                    NSString *geoLocations = [formattedAddressLines lastObject];
+//                    if (geoLocations) {
+//                        [weakSelf didSendGeolocationsMessageWithGeolocaltions:geoLocations location:placemark.location];
+//                    }
+//                }
+//            }];
+//            break;
+//        }
         case 4:{
             break;
         }
