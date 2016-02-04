@@ -226,13 +226,14 @@
 - (void)addMessage:(XHMessage *)addedMessage {
     WEAKSELF
     [self exChangeMessageDataSourceQueue:^{
-        NSMutableArray *messages = [NSMutableArray arrayWithArray:weakSelf.messages];
-        [messages addObject:addedMessage];
-        
-        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
-        [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
         
         [weakSelf exMainQueue:^{
+            NSMutableArray *messages = [NSMutableArray arrayWithArray:weakSelf.messages];
+            [messages addObject:addedMessage];
+            
+            NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:1];
+            [indexPaths addObject:[NSIndexPath indexPathForRow:messages.count - 1 inSection:0]];
+            
             weakSelf.messages = messages;
             [weakSelf.messageTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             [weakSelf scrollToBottomAnimated:YES];
